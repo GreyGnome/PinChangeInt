@@ -36,7 +36,7 @@ arduino boards."
 	(the file gpl.txt is included with the library's zip package)
 
 ---- ACKNOWLEDGMENTS ---------------------------------------------------------------------
-This library was originally written by Chris J. Klick, Robot builder and all around geek, who said of it,
+This library was originally written by Chris J. Kiick, Robot builder and all around geek, who said of it,
 	"HI, Yeah, I wrote the original PCint library. It was a bit of a hack and the new one has better
 	features.  I intended the code to be freely usable.  Didn't really think about a license.  Feel
 	free to use it in your code: I hereby grant you permission."
