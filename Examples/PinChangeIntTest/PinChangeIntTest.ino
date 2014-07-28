@@ -278,8 +278,7 @@ void setup() {
   Serial.begin(115200);
   delay(250);
   Serial.println("Test");
-  delay(500);
-  for (i=0; i < 7; i++) {
+  for (i=0; i < 6; i++) {
     pinMode(pins[i], INPUT); digitalWrite(pins[i], HIGH);
     ports[i]=digitalPinToPort(pins[i]);
     switch (pins[i]) {
