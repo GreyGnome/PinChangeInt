@@ -2,6 +2,35 @@
 
 	PinChangeInt
 	---- RELEASE NOTES --- 
+Version 2.32 Fri Oct 31 05:16:34 CDT 2014
+Argh! I should have done a "git status" prior to to tagging 2.31. Well, this makes 2.32.
+
+I had added an additional method to putString, so as to allow for a different signature and stop
+the compiler from complaining:
+
+uint8_t ByteBuffer::putString(const char *in) {
+       return(putString((char *) in));
+}
+
+No other changes over 2.32
+
+Version 2.31 Fri Oct 31 05:11:41 CDT 2014
+I forgot to update these release notes for version 2.30. And I didn't tag it. This is merely a
+some housekeeping from 2.30.  Here is what changed from version 2.21:
+
+In Examples/PinChangeIntTest/PinChangeIntTest.ino:
+    Whacked a nasty little bug in setup(), where my 'i' variable in the for
+    loop went until 'i < 7'. Should have been 'i < 6' all along. Grrr.
+
+In PinChangeInt.h:
+    Most significantly: Many thanks to JRHelbert for fixing the PJ0 and PJ1
+    interrupt PCMSK1 issue on the Arduino Mega! This was a great coup, in my
+    humble opinion.  Mega interrupt users are indebted to you, jrhelbert.
+    
+    Added PinChangeIntDebug.ino, which is a simplified PinChangeIntTest. My
+    head was spinning in PinChangeIntTest due to a nasty bug that I whacked,
+    so I wanted a simplified test file.
+
 
 Version 2.21 (beta) Mon Apr  8 22:06:13 CDT 2013
 Fixed Examples/ByteBuffer/ByteBuffer.cpp. Bug in the PutString() method. Does not affect the behavior

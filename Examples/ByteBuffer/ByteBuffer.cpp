@@ -87,6 +87,10 @@ uint8_t ByteBuffer::put(byte in){
 }
 
 
+uint8_t ByteBuffer::putString(const char *in) {
+	return(putString((char *) in));
+}
+
 uint8_t ByteBuffer::putString(char *in){
 	uint8_t count=0;
 	char *inString;
