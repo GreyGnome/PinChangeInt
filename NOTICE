@@ -1,0 +1,27 @@
+	NOTICE
+   PinChangeInt Arduino Library
+   Copyright 2008 Chris J. Kiick
+   Copyright 2009-2011 Lex Talionis
+   Copyright 2010-2014 Michael Schwager
+
+   This product includes software developed by Chris J. Kiick, Lex Talionis,
+   and Mike Schwager (aka, 'GreyGnome').
+
+   This library was inspired by and derived from Chris J. Kiick's PCInt Arduino
+   Playground example here: http://www.arduino.cc/playground/Main/PcInt
+
+   Lex Talionis picked it up, refined it, and created a Google Code page for
+   it, (still) found here: http://code.google.com/p/arduino-pinchangeint/
+
+   GreyGnome is the current maintainer, and would like to thank all those
+   Open Source coders, the Arduino makers and community, and especially Chris
+   and Lex for lighting the flame and showing the way! And a big thank you to
+   the users who have contributed comments and bug fixes along the way.
+   Without you this project would not have overcome some significant hurdles.
+   A more complete list can be found in the README file.
+
+   A HUGE thanks to Jan Baeyens ("jantje"), who has graciously DONATED an
+   Arduino Mega ADK board to the PinChangeInt project!!! Wow, thanks Jan!
+   This makes the 2560-based Arduino Mega a first class supported platform-
+   I will be able to test it and verify that it works.
+
