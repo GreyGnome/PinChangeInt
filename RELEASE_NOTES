@@ -2,6 +2,24 @@
 
 	PinChangeInt
 	---- RELEASE NOTES --- 
+Version 2.40-rc1 Fri Nov  7 07:26:36 CST 2014
+I'm going to the "-rcX" numbering format like the Linux kernel. That is, 2.40-rc1 is the first "release
+candidate" on the way to a stable 2.40 release.
+
+Beginning with this release, only Arduino >= 1.00 is supported. The older Arduinos are left to the
+dustbin of history...
+
+I have BIG news: Jan Baeyens ("jantje") has graciously DONATED an Arduino Mega ADK
+to the PinChangeInt project!!! Wow, thanks Jan! This makes the 2560-based Arduino Mega
+a first class supported platform- I will be able to test it and verify that it works.
+I have done so in this release.
+
+To that end, The PniChangeIntExample has been modified to work properly with the Arduino Mega.
+Thanks, Jan!
+
+And the BIG BIG BIG news: The library is now licensed under the Apache 2.0 License. I wanted to
+free the code up for any use, and Chris J. Kiick and Lex Talionis graciously agreed.
+
 Version 2.32 Fri Oct 31 05:16:34 CDT 2014
 Argh! I should have done a "git status" prior to to tagging 2.31. Well, this makes 2.32.
 

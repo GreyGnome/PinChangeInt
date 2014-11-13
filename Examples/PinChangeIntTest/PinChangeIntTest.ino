@@ -4,6 +4,7 @@
 //                                          I had some "cli()" without "sei()" in there.
 // See the Wiki at http://code.google.com/p/arduino-pinchangeint/wiki for more information.
 // This sketch requires the ByteBuffer library, which is found in the PinChangeInt zipfile.
+// for vim editing: :set et ts=2 sts=2 sw=2
 //-------- define these in your sketch, if applicable ----------------------------------------------------------
 //-------- This must go ahead of the #include statement --------------------------------------------------------
 // You can reduce the memory footprint of this handler by declaring that there will be no pin change interrupts
@@ -33,22 +34,32 @@
 // This example demonstrates a configuration of 6 interrupting pins and 3 interrupt functions.
 // A variety of interrupting pins have been chosen, so as to test all PORTs on the Arduino.
 // The pins are as follows:
+// quicfunc0 is attached to tPIN1-4.
+// quicfunc1 is attached to tPIN5.
+// quicfunc2 is attached to tPIN6.
+// Pins tPIN1 and tPIN6 interrupt on FALLING.
+// tPIN2 and tPIN4 interrupt on RISING.
+// tPIN3 and tPIN5 interrupt on CHANGE.
+// NOTE:
+// For the Analog Input pins used as digital input pins, you can use numbers such as 14, 15, 16, etc.
+// or you can use A0, A1, A2, etc. (the Arduino code comes with #define's for the Analog Input pin
+// names and will properly recognize e.g., pinMode(A0, INPUT));
+#if defined __AVR_ATmega2560__ || defined __AVR_ATmega1280__ || defined __AVR_ATmega1281__ || defined __AVR_ATmega2561__ || defined __AVR_ATmega640__
+#define tPIN1 9  // port J
+#define tPIN2 10
+#define tPIN3 A8 // Port K
+#define tPIN4 A12
+#define tPIN5 SS   // Port B, also can be given as "57"
+#define tPIN6 MISO // This pin starts and stops the count
+#else
+// These only work for ATMega328-compatibles; ie, Leonardo is not covered here.
 #define tPIN1 2  // port D
 #define tPIN2 3
 #define tPIN3 11 // Port B
 #define tPIN4 12
 #define tPIN5 A3 // Port C, also can be given as "17"
-#define tPIN6 A4 // starts and stops the count
-// All pins send interrupts.  Arduino pins 2 and A4 (tPIN1,6) interrupt on FALLING.
-// Arduino pins 3 and 12 (tPIN2,4) interrupt on RISING.
-// Arduino pins 11 and A3 (tPIN5) interrupts on CHANGE.
-// quicfunc0 is attached to Arduino pins 2, 3, 11, and 12 (tPIN1-4)
-// quicfunc1 is attached to Arduino pin A3 (tPIN5)
-// quicfunc2 is attached to Arduino pin A4 (tPIN6).
-// NOTE:
-// For the Analog Input pins used as digital input pins, you can use numbers such as 14, 15, 16, etc.
-// or you can use A0, A1, A2, etc. (the Arduino code comes with #define's for the Analog Input pin
-// names and will properly recognize e.g., pinMode(A0, INPUT));
+#define tPIN6 A4 // This pin starts and stops the count
+#endif
 
 // HOW IT WORKS
 // The interrupt on Arduino pin A4 (tPIN6) will, when triggered, start the counting of interrupts.  

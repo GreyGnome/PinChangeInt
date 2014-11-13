@@ -1,39 +1,50 @@
 ---- README -----------------------------------------------------------------------------
 	PinChangeInt README
 
-
 ---- DESCRIPTION ------------------------------------------------------------------------
-This is the PinChangeInt library for the Arduino.
+This is the PinChangeInt library for the Arduino. It provides an extension to the interrupt
+support for arduino by adding pin change interrupts, giving a way for users to have interrupts
+drive off of any pin (ATmega328-based Arduinos), by the Port B, J, and K pins on the Arduino
+Mega and its ilk, and on the appropriate ports (including Port A) on the Sanguino and its ilk.
 
 See google code project for latest, bugs and info http://code.google.com/p/arduino-pinchangeint/
 See github for the bleeding edge code: https://github.com/GreyGnome/PinChangeInt
 For more information Refer to avr-gcc header files, arduino source and atmega datasheet.
 
-This library was inspired by and derived from "johnboiles" (it seems) 
-PCInt Arduino Playground example here: http://www.arduino.cc/playground/Main/PcInt
-If you are the original author, please let us know at the google code page
+This library was inspired by and derived from Chris J. Kiick's
+PCInt Arduino Playground example here: http://playground.arduino.cc/Main/PcInt
 
-It provides an extension to the interrupt support for arduino by adding pin change interrupts,
-giving a way for users to have interrupts drive off of any pin (ATmega328-based Arduinos),
-by the Port B, J, and K pins on the Arduino Mega and its ilk, and on the appropriate
-ports (including Port A) on the Sanguino and its ilk.  Regarding the MEGA and friends, Cserveny
-says: "J is mostly useless, because of the hardware UART...  (many) pins are not connected on the
-arduino boards."
+Regarding the MEGA and friends, Cserveny says: "J is mostly useless, because of the hardware
+UART...  (many) pins are not connected on the arduino boards." The following pins are usable 
+s PinChangeInt pins on the Mega (ATmega1280 and ATmega2560-based Arduinos**):
+
+Arduino              Arduino              Arduino
+  Pin*  PORT PCINT     Pin   PORT PCINT     Pin   PORT PCINT
+  A8     PK0  16       10     PB4   4       SS     PB0   0
+  A9     PK1  17       11     PB5   5       SCK    PB1   1
+ A10     PK2  18       12     PB6   6       MOSI   PB2   2
+ A11     PK3  19       13     PB7   7**     MISO   PB3   3
+ A12     PK4  20       14     PJ1  10
+ A13     PK5  21       15     PJ0   9
+ A14     PK6  22       
+ A15     PK7  23
+...indeed, the ATmega2560 supports many more Pin Change Interrupt pins but they are
+unavailable on the Arduino, unless you want to solder teeny tiny wires.
+
+* Note: Arduino Pin 0 is PE0 (PCINT8), which is RX0 and thus is not supported by this library.
+It is the same pin the Arduino uses to upload sketches, and they are connected to the FT232RL
+USB-to-Serial chip (ATmega16U2 on the R3).
+** On the MegaADK, according to http://arduino.cc/en/Main/ArduinoBoardMegaADK:
+"USB Host: MAX3421E. The MAX3421E comunicate with Arduino with the SPI bus. So it uses the
+following pins:
+Digital: 7 (RST), 50 (MISO), 51 (MOSI), 52 (SCK). NB:Please do not use Digital pin 7 as input
+or output because is used in the comunication with MAX3421E "
 
 ---- LICENSE ----------------------------------------------------------------------------
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-	(the file gpl.txt is included with the library's zip package)
+Licensed under the Apache2.0 license. See the source files for the license boilerplate,
+and the LICENSE file for the full text. The copyright holders for this code are Chris J. Kiick,
+Lex Talionis, and Michael Schwager. Chris and Lex have graciously agreed to the Apache 2.0
+license for this code, and beginning with version 2.40-rc1 this is the license that applies.
 
 ---- ACKNOWLEDGMENTS ---------------------------------------------------------------------
 This library was originally written by Chris J. Kiick, Robot builder and all around geek, who said of it,
@@ -50,15 +61,19 @@ The library was then picked up by Lex Talionis, who created the Google Code webs
 of thanks to Lex, too, for all his hard work! He is currently the other official maintainer of this
 code.
 
-Chris' original PCInt Arduino Playground example is here: http://www.arduino.cc/playground/Main/PcInt
-
 Many thanks to all the contributors who have contributed bug fixes, code, and suggestions
 to this project: 
 
 John Boiles and Baziki (who added fixes to PcInt), Maurice Beelen, nms277, Akesson Karlpetter, and
 Orly Andico for various fixes to this code, Rob Tillaart for some excellent code reviews and nice
 optimizations, Andre' Franken for a good bug report that kept me thinking, cserveny.tamas a special
-shout out for providing the MEGA code to PinChangeInt- Thanks!
+shout out for providing the MEGA code to PinChangeInt, and Pat O'Brien for testing and reporting
+on the Arduino Yun.- Thanks!
 
-Many thanks to JRHelbert for fixing the PJ0 and PJ1 interrupt PCMSK1 issue... 06/2014
+A HUGE thanks to JRHelbert for fixing the PJ0 and PJ1 interrupt PCMSK1 issue on the Mega... 06/2014
 
+A HUGE thanks to Jan Baeyens ("jantje"), who has graciously DONATED an Arduino Mega ADK
+to the PinChangeInt project!!! Wow, thanks Jan! This makes the 2560-based Arduino Mega a first class
+supported platform- I will be able to test it and verify that it works.
+
+If apologize if I have forgotten anyone here. Please let me know if so.
