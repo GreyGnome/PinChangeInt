@@ -1,7 +1,5 @@
 // PinChangeIntTest
-// version 1.0 Wed Feb 15 07:25:09 CST 2012
-// Version 1.1 Fri Jun 22 19:10:50 CDT 2012 minor tweaks to eliminate compiler warnings.  Also, there were bugfixes in ByteBuffer.
-//                                          I had some "cli()" without "sei()" in there.
+//
 // See the Wiki at http://code.google.com/p/arduino-pinchangeint/wiki for more information.
 // This sketch requires the ByteBuffer library, which is found in the PinChangeInt zipfile.
 // for vim editing: :set et ts=2 sts=2 sw=2

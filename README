@@ -3,13 +3,17 @@
 
 ---- DESCRIPTION ------------------------------------------------------------------------
 This is the PinChangeInt library for the Arduino. It provides an extension to the interrupt
-support for arduino by adding pin change interrupts, giving a way for users to have interrupts
-drive off of any pin (ATmega328-based Arduinos), by the Port B, J, and K pins on the Arduino
-Mega and its ilk, and on the appropriate ports (including Port A) on the Sanguino and its ilk.
+support for ATmega328 and ATmega2560-based Arduinos, and some ATmega32u4 and Sanguinos. It adds
+pin change interrupts, giving a way for users to have interrupts drive off of any pin
+(ATmega328-based Arduinos), by the Port B, J, and K pins on the Arduino Mega and its ilk, and
+on the appropriate ports (including Port A) on the Sanguino and its ilk. Yun and Sanguino support
+are weak, quite honestly, as I don't have either a Sanguino or a Yun. Theoretically the library
+would work with a Leonardo but I have no reports regarding that platform. The ATmega32u4 has
+port B (8 pins) pin change interrupts only.
 
-See google code project for latest, bugs and info http://code.google.com/p/arduino-pinchangeint/
-See github for the bleeding edge code: https://github.com/GreyGnome/PinChangeInt
-For more information Refer to avr-gcc header files, arduino source and atmega datasheet.
+See Google Code project for latest, bugs and info http://code.google.com/p/arduino-pinchangeint/
+See Github for the bleeding edge code: https://github.com/GreyGnome/PinChangeInt
+For more information refer to avr-gcc header files, Arduino source and Atmega datasheet.
 
 This library was inspired by and derived from Chris J. Kiick's
 PCInt Arduino Playground example here: http://playground.arduino.cc/Main/PcInt
@@ -37,18 +41,20 @@ USB-to-Serial chip (ATmega16U2 on the R3).
 ** On the MegaADK, according to http://arduino.cc/en/Main/ArduinoBoardMegaADK:
 "USB Host: MAX3421E. The MAX3421E comunicate with Arduino with the SPI bus. So it uses the
 following pins:
-Digital: 7 (RST), 50 (MISO), 51 (MOSI), 52 (SCK). NB:Please do not use Digital pin 7 as input
-or output because is used in the comunication with MAX3421E "
+Digital: 7 (RST), 50 (MISO), 51 (MOSI), 52 (SCK). NB: Please do not use Digital pin 7 as input
+or output because is used in the comunication (sic) with MAX3421E "
 
 ---- LICENSE ----------------------------------------------------------------------------
 Licensed under the Apache2.0 license. See the source files for the license boilerplate,
-and the LICENSE file for the full text. The copyright holders for this code are Chris J. Kiick,
-Lex Talionis, and Michael Schwager. Chris and Lex have graciously agreed to the Apache 2.0
-license for this code, and beginning with version 2.40-rc1 this is the license that applies.
+the LICENSE file for the full text, and the NOTICE file which the Apache2.0 license requires
+that you distribute with any code that you distribute that uses this library. The copyright
+holders for this code are Chris J. Kiick, Lex Talionis, and Michael Schwager. Chris and Lex
+have graciously agreed to the Apache 2.0 license for this code, and beginning with version
+2.40-rc1 this is the license that applies.
 
 ---- ACKNOWLEDGMENTS ---------------------------------------------------------------------
 This library was originally written by Chris J. Kiick, Robot builder and all around geek, who said of it,
-	"HI, Yeah, I wrote the original PCint library. It was a bit of a hack and the new one has better
+	"Hi, Yeah, I wrote the original PCint library. It was a bit of a hack and the new one has better
 	features.  I intended the code to be freely usable.  Didn't really think about a license.  Feel
 	free to use it in your code: I hereby grant you permission."
 Thanks, Chris! A hack? I dare say not, if I have taken this any further it's merely by standing on the
@@ -75,5 +81,12 @@ A HUGE thanks to JRHelbert for fixing the PJ0 and PJ1 interrupt PCMSK1 issue on 
 A HUGE thanks to Jan Baeyens ("jantje"), who has graciously DONATED an Arduino Mega ADK
 to the PinChangeInt project!!! Wow, thanks Jan! This makes the 2560-based Arduino Mega a first class
 supported platform- I will be able to test it and verify that it works.
+
+Finally, a shout out to Leonard Bernstein. I was inspired by him
+(https://www.youtube.com/watch?feature=player_detailpage&v=R9g3Q-qvtss#t=1160) from a Ted talk
+by Itay Talgam. None of the contributors, myself included, has any interest in making money
+from this library and so I decided to free up the code as much as possible for any purpose.
+...But! Credit where credit is due; it's not only a nice idea, it's the law (as in, the license
+terms)! "If you love something,  give it away."
 
 If apologize if I have forgotten anyone here. Please let me know if so.
