@@ -43,12 +43,12 @@
 // or you can use A0, A1, A2, etc. (the Arduino code comes with #define's for the Analog Input pin
 // names and will properly recognize e.g., pinMode(A0, INPUT));
 #if defined __AVR_ATmega2560__ || defined __AVR_ATmega1280__ || defined __AVR_ATmega1281__ || defined __AVR_ATmega2561__ || defined __AVR_ATmega640__
-#define tPIN1 9  // port J
-#define tPIN2 10
+#define tPIN1 14  // port J
+#define tPIN2 15
 #define tPIN3 A8 // Port K
 #define tPIN4 A12
 #define tPIN5 SS   // Port B, also can be given as "57"
-#define tPIN6 MISO // This pin starts and stops the count
+#define tPIN6 MOSI // This pin starts and stops the count
 #else
 // These only work for ATMega328-compatibles; ie, Leonardo is not covered here.
 #define tPIN1 2  // port D
