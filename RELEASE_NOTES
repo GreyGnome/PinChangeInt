@@ -2,6 +2,15 @@
 
 	PinChangeInt
 	---- RELEASE NOTES --- 
+Version 2.40-rc2 Mon Jan 12 07:37:22 CST 2015
+Happy New Year!
+
+Cleaned up some code, and added the following #define's for ease-of-use:
+
+#define        detachPinChangeInterrupt(pin)                PCintPort::detachInterrupt(pin)
+#define        attachPinChangeInterrupt(pin,userFunc,mode)  PCintPort::attachInterrupt(pin, &userFunc,mode)
+#define getInterruptedPin()                                 PCintPort::getArduinoPin
+
 Version 2.40-rc1 Fri Nov  7 07:26:36 CST 2014
 I'm going to the "-rcX" numbering format like the Linux kernel. That is, 2.40-rc1 is the first "release
 candidate" on the way to a stable 2.40 release.
@@ -381,3 +390,45 @@ See version 2.13 (beta) above. No change other than tidying up the release notes
 
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+NOTES ================================================================================
+
+Serial.print()----------------
+
+Serial.print() does not work well inside interrupts. This is because it uses interrupts,
+and while you are in an interrupt, interrupts are (by default) turned off.
+Serial is declared in /usr/share/arduino/hardware/arduino/cores/arduino/HardwareSerial.h .
+In the write() method in the .cpp file, for example it says:
+...
+  // If the output buffer is full, there's nothing for it other than to 
+  // wait for the interrupt handler to empty it a bit
+  // ???: return 0 here instead?
+  while (i == _tx_buffer->tail)
+    ;
+...
+And the ISR is further down in that file (this for the ATmega328 I believe):
+ISR(USART_RX_vect)
+...
+
+If a user wants to try to use Serial.print() inside an ISR, I believe it's possible
+(by turning on interrupts inside the interrupt)...
+but it would require them to be aware of any possible contention between the interrupts,
+and the print ISRs.
+
+
+Software Serial----------
+Also, the SoftwareSerial library defines ISRs for Pin Change Interrupt ports:
+
+ISR(PCINT0_vect)
+{
+  SoftwareSerial::handle_interrupt();
+}
+
+...It defines the interrupt on all ports, whether it's using them or not
+(the library cannot know ahead of time if the user will be using a set of pins
+or not).
+
+To ensure compatibility with the SoftwareSerial library, the user should comment
+out the ports that they are NOT using with the SoftwareSerial library, in 
+/usr/share/arduino/libraries/SoftwareSerial/SoftwareSerial.cpp
+and comment out the ports that they ARE using with this library in PinChangeInt.h
