@@ -1,13 +1,21 @@
-// This file is part of PinChangeInt.
+// This file is part of the PinChangeInt library for the Arduino.  This library will work on any ATmega328-based
+// or ATmega2560-based Arduino, as well as the Sanguino or Mioduino.
+
+// Most of the pins of an Arduino Uno use Pin Change Interrupts, and because of the way the ATmega interrupt
+// system is designed it is difficult to trigger an Interrupt Service Request off of any single pin, and on
+// any change of state (either rising, or falling, or both).  The goal of this library is to make it easy for
+// the programmer to attach an ISR so it will trigger on any change of state on any Pin Change Interrupt pin.
+
+// (NOTE TO SELF: Update the PCINT_VERSION define, below) -----------------
 #define PCINT_VERSION 2401
 /*
 Copyright 2008 Chris J. Kiick
 Copyright 2009-2011 Lex Talionis
 Copyright 2010-2014 Michael Schwager (aka, "GreyGnome")
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
@@ -17,6 +25,40 @@ You may obtain a copy of the License at
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
+/*
+ * QUICKSTART
+ *
+ * For the beginners/lazy/busy/wreckless:
+ * To attach an interrupt to your Arduino Pin, calling your function "userFunc", and acting on
+ * the "mode", which is a change in the pin's state; either RISING or FALLING or CHANGE:
+ *		attachPinChangeInterrupt(pin,userFunc,mode)
+ * Your function must not return any values and it cannot take any arguments (that is, its definition
+ * has to look like this:
+ *		void userFunc() {
+ *		  ...your code here...
+ *		}
+ *
+ * That's it. Everything else are details.
+ *
+ * If you need to exchange information to/from the interrupt, you can use global volatile variables.
+ * See the example for more information.
+ *
+ *	You probably will not need to do this, but later in your sketch you can detach the interrupt:
+ *		detachPinChangeInterrupt(pin)
+ *
+ *	If you want to see what the *last* pin that triggered an interrupt was, you can get it this way:
+ *		getInterruptedPin()
+ *	Note: If you have multiple pins that are triggering interrupts and they are sufficiently fast,
+ *	you will not be able to find all the pins that interrupted.
+*/
+
+//
+// For the beginners
+//
+#define	detachPinChangeInterrupt(pin)				PCintPort::detachInterrupt(pin)
+#define	attachPinChangeInterrupt(pin,userFunc,mode)	PCintPort::attachInterrupt(pin, &userFunc,mode)
+#define getInterruptedPin()							PCintPort::getArduinoPin()
 
 // We use 4-character tabstops, so IN VIM:  <esc>:set ts=4 sw=4 sts=4
 // ...that's: ESCAPE key, colon key, then
@@ -71,9 +113,7 @@ You may obtain a copy of the License at
 //-------- define the above in your sketch, if applicable ------------------------------------------------------
 
 /*
-	PinChangeInt.h
-	---- VERSIONS --- (NOTE TO SELF: Update the PCINT_VERSION define, below) -----------------
-	...Moved to RELEASE_NOTES.
+	VERSIONS found in moved to RELEASE_NOTES.
 
 	See the README file for the License and more details.
 */
@@ -99,7 +139,7 @@ You may obtain a copy of the License at
 * must use some logic to actually implement a per-pin interrupt service.
 */
 
-/* Pin to interrupt map:
+/* Pin to interrupt map, ATmega328:
 * D0-D7 = PCINT 16-23 = PCIR2 = PD = PCIE2 = pcmsk2
 * D8-D13 = PCINT 0-5 = PCIR0 = PB = PCIE0 = pcmsk0
 * A0-A5 (D14-D19) = PCINT 8-13 = PCIR1 = PC = PCIE1 = pcmsk1
@@ -148,6 +188,10 @@ typedef void (*PCIntvoidFuncPtr)(void);
 
 class PCintPort {
 public:
+	// portB=PCintPort(2, 1,PCMSK1);
+	// index:   portInputReg(*portInputRegister(index)), 
+	// pcindex: PCICRbit(1 << pcindex)
+	// maskReg: portPCMask(maskReg)
 	PCintPort(int index,int pcindex, volatile uint8_t& maskReg) :
 	portInputReg(*portInputRegister(index)),
 	portPCMask(maskReg),
@@ -484,15 +528,6 @@ void PCintPort::PCint() {
 		intrCount++;
 		PCintPort::s_count=intrCount;
 		#endif
-		// OLD v. 2.01 technique: Test 1: 3163; Test 7: 3993
-		// From robtillaart online: ------------ (starting v. 2.11beta)
-		// uint8_t changedPins = PCintPort::curr ^ lastPinView;
-		// lastPinView = PCintPort::curr;
-		// uint8_t fastMask = changedPins & ((portRisingPins & PCintPort::curr ) | ( portFallingPins & ~PCintPort::curr ));
-		// NEW v. 2.11 technique: Test 1: 3270 Test 7: 3987
-		// -------------------------------------
-		// was: uint8_t changedPins = PCintPort::curr ^ lastPinView;
-		// makes test 6 of the PinChangeIntSpeedTest go from 3867 to 3923.  Not good.
 		uint8_t changedPins = (PCintPort::curr ^ lastPinView) &
 							  ((portRisingPins & PCintPort::curr ) | ( portFallingPins & ~PCintPort::curr ));
 
