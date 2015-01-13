@@ -9,8 +9,9 @@ Cleaned up some code, and added the following #define's for ease-of-use:
 
 #define        detachPinChangeInterrupt(pin)                PCintPort::detachInterrupt(pin)
 #define        attachPinChangeInterrupt(pin,userFunc,mode)  PCintPort::attachInterrupt(pin, &userFunc,mode)
-#define getInterruptedPin()                                 PCintPort::getArduinoPin
+#define        getInterruptedPin()                          PCintPort::getArduinoPin()
 
+Cleaned up the README for better display on GitHub.
 Version 2.40-rc1 Fri Nov  7 07:26:36 CST 2014
 I'm going to the "-rcX" numbering format like the Linux kernel. That is, 2.40-rc1 is the first "release
 candidate" on the way to a stable 2.40 release.
