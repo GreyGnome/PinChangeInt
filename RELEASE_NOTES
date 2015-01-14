@@ -12,6 +12,7 @@ Cleaned up some code, and added the following #define's for ease-of-use:
 #define        getInterruptedPin()                          PCintPort::getArduinoPin()
 
 Cleaned up the README for better display on GitHub.
+
 Version 2.40-rc1 Fri Nov  7 07:26:36 CST 2014
 I'm going to the "-rcX" numbering format like the Linux kernel. That is, 2.40-rc1 is the first "release
 candidate" on the way to a stable 2.40 release.
@@ -24,7 +25,7 @@ to the PinChangeInt project!!! Wow, thanks Jan! This makes the 2560-based Arduin
 a first class supported platform- I will be able to test it and verify that it works.
 I have done so in this release.
 
-To that end, The PniChangeIntExample has been modified to work properly with the Arduino Mega.
+To that end, The PinChangeIntExample has been modified to work properly with the Arduino Mega.
 Thanks, Jan!
 
 And the BIG BIG BIG news: The library is now licensed under the Apache 2.0 License. I wanted to
