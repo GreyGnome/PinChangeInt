@@ -7,7 +7,7 @@
 // the programmer to attach an ISR so it will trigger on any change of state on any Pin Change Interrupt pin.
 
 // (NOTE TO SELF: Update the PCINT_VERSION define, below) -----------------
-#define PCINT_VERSION 2401
+#define PCINT_VERSION 2402
 /*
 Copyright 2008 Chris J. Kiick
 Copyright 2009-2011 Lex Talionis
