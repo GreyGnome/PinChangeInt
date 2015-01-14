@@ -1,0 +1,70 @@
+The purpose of this library is to give the programmer the ability to add interrupts 
+with the easy of attachInterrupt, which looks like this:
+	attachInterrupt(interrupt, &function, MODE)
+...the interrupt is a number which gets translated to the proper pin on the Arduino. For example,
+Board		int.0	int.1	int.2	int.3	int.4	int.5
+Uno, Ethernet	2	3	 	 	 	 
+Mega2560	2	3	21	20	19	18
+Leonardo	3	2	0	1	7
+Due		(doesn't use interrupt numbers, it uses the pin numbers directly)
+
+The MODE is LOW, CHANGE, RISING, or FALLING. On the Due board, you also have HIGH.
+
+
+The PinChangeInterrupt library does not work on the Due; it is not necessary. It is somewhat easier
+to use than attachInterrupt() because you don't have to translate from an "Interrupt number" to a
+pin number- you simply give it the pin that you want to Interrupt on:
+
+	PCintPort::attachInterrupt(interrupt, &function, MODE)
+
+The MODE is LOW, CHANGE, RISING, or FALLING. On the Due board, you also have HIGH.
+
+To have an Interrupt:
+
+Global Interrupt flag must be enabled.
+Set the I-bit in SREG.
+In PCICR: bit 2 == PCIE2: set, enable pins PCINT[23:16], enable individual by PCMSK2
+          bit 1 == PCIE1: set, enable PCINT[14:8], enable individual by PCMSK1
+          bit 0 == PCIE0: set, enable PCINT[7:0], enable individual by PCMSK0
+
+Pin Change Interrupts and Other Libraries ============================================================
+
+Serial.print()----------------
+
+Serial.print() does not work well inside interrupts. This is because it uses interrupts,
+and while you are in an interrupt, interrupts are (by default) turned off.
+Serial is declared in /usr/share/arduino/hardware/arduino/cores/arduino/HardwareSerial.h .
+In the write() method in the .cpp file, for example it says:
+...
+  // If the output buffer is full, there's nothing for it other than to 
+  // wait for the interrupt handler to empty it a bit
+  // ???: return 0 here instead?
+  while (i == _tx_buffer->tail)
+    ;
+...
+And the ISR is further down in that file (this for the ATmega328 I believe):
+ISR(USART_RX_vect)
+...
+
+If a user wants to try to use Serial.print() inside an ISR, I believe it's possible
+(by turning on interrupts inside the interrupt)...
+but it would require them to be aware of any possible contention between the interrupts,
+and the print ISRs.
+
+
+Software Serial----------
+The SoftwareSerial library defines ISRs for Pin Change Interrupt ports:
+
+ISR(PCINT0_vect)
+{
+  SoftwareSerial::handle_interrupt();
+}
+
+...It defines the interrupt on all ports, whether it's using them or not
+(the library cannot know ahead of time if the user will be using a set of pins
+or not).
+
+To ensure compatibility with the SoftwareSerial library, the user should comment
+out the ports that they are NOT using with the SoftwareSerial library, in 
+/usr/share/arduino/libraries/SoftwareSerial/SoftwareSerial.cpp
+and comment out the ports that they ARE using with this library in PinChangeInt.h
