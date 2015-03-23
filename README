@@ -1,6 +1,6 @@
 ---- README --------------------------------------------------------------------
 	PinChangeInt README. Find instructions and more information at
-	http://code.google.com/p/arduino-pinchangeint/
+	https://github.com/GreyGnome/PinChangeInt/wiki
 
 ---- DESCRIPTION ---------------------------------------------------------------
 This is the PinChangeInt library for the Arduino. It provides an extension to
@@ -13,19 +13,13 @@ weak, quite honestly, as I don't have either a Sanguino or a Yun. Theoretically
 the library would work with a Leonardo but I have no reports regarding that
 platform. The ATmega32u4 has port B (8 pins) pin change interrupts only.
 
-See Google Code project for latest, bugs and info:
-	http://code.google.com/p/arduino-pinchangeint/
-See Github for the bleeding edge code:
-	https://github.com/GreyGnome/PinChangeInt
 For more information refer to avr-gcc header files, Arduino source and Atmega
 datasheet.
 
 This library was inspired by and derived from Chris J. Kiick's PCInt Arduino
 Playground example here: http://playground.arduino.cc/Main/PcInt
 
-Regarding the MEGA and friends, Cserveny says: "J is mostly useless, because of
-the hardware UART...  (many) pins are not connected on the arduino boards." The
-following pins are usable PinChangeInt pins on the Mega (ATmega1280 and
+The following pins are usable PinChangeInt pins on the Mega (ATmega1280 and
 ATmega2560-based Arduinos**):
 
 Arduino              Arduino              Arduino
