@@ -37,9 +37,12 @@ volatile uint8_t pin3Count=0;
 // Do not use any Serial.print() in interrupt subroutines. Serial.print() uses interrupts,
 // and by default interrupts are off in interrupt subroutines.
 // Here we update a counter corresponding to whichever pin interrupted.
-void quicfunc() {
-  latest_interrupted_pin=PCintPort::arduinoPin;
-  interrupt_count[latest_interrupted_pin]++;
+void quicfunc0() {
+  interrupt_count[MYPIN1]++;
+};
+
+void quicfunc1() {
+  interrupt_count[MYPIN2]++;
 };
 
 // You can assign any number of functions to different pins. How cool is that?
@@ -53,9 +56,9 @@ void pin3func() {
 // Attach the interrupts in setup()
 void setup() {
   pinMode(MYPIN1, INPUT_PULLUP);
-  attachPinChangeInterrupt(MYPIN1, quicfunc, RISING);
+  attachPinChangeInterrupt(MYPIN1, quicfunc0, RISING);
   pinMode(MYPIN2, INPUT_PULLUP);
-  attachPinChangeInterrupt(MYPIN2, quicfunc, RISING);
+  attachPinChangeInterrupt(MYPIN2, quicfunc1, RISING);
   pinMode(MYPIN3, INPUT_PULLUP);
   attachPinChangeInterrupt(MYPIN3, pin3func, CHANGE); // Any state change will trigger the interrupt.
   Serial.begin(115200);
@@ -86,7 +89,7 @@ void loop() {
     }
   }
   if (currentPIN3Count != pin3Count) {          // Print our monotonically increasing counter (no reset to 0).
-      Serial.print("Pin 3 count update: "); Serial.print(pin3Count, DEC); Serial.println();
+      Serial.print("Third pin count update: "); Serial.print(pin3Count, DEC); Serial.println();
       currentPIN3Count=pin3Count;
   }
 }
