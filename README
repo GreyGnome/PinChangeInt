@@ -2,6 +2,13 @@
 	PinChangeInt README. Find instructions and more information at
 	https://github.com/GreyGnome/PinChangeInt/wiki
 
+NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE NOTICE
+This library is deprecated as of April 3, 2015. This means that I will be
+providing bug fixes for some time, but users are encouraged to migrate to
+the EnableInterrupt library, at https://github.com/GreyGnome/EnableInterrupt .
+It is faster and easier to use. Thank you.
+
+
 ---- DESCRIPTION ---------------------------------------------------------------
 This is the PinChangeInt library for the Arduino. It provides an extension to
 the interrupt support for ATmega328 and ATmega2560-based Arduinos, and some
